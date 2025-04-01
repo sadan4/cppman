@@ -16,10 +16,11 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p $out/share/man/man3
 
     cp ./* $out/share/man/man3
-    # only link instead of hard rename
     # Lib keywords
-    rename -l 's/C\+\+ keyword: (\w+)\.(.*?)$/cpp_kw_$1.$2/' $out/share/man/man3/*
+    rename 's/C\+\+ keyword: (\w+)\.(.*?)$/cpp_kw_$1.$2/' $out/share/man/man3/*
     # headers
-    rename -l 's/(?:Standard|Experimental) library header (<\w+>)\.(.*?)$/$1.$2/' $out/share/man/man3/*
+    rename 's/(?:Standard|Experimental) library header (<\w+>)\.(.*?)$/$1.$2/' $out/share/man/man3/*
+    # unordered_map and map template types
+    rename 's/(std::(?:unordered_)?map)<.*?>(.*)/$1$2/' $out/share/man/man3/*
   '';
 })
