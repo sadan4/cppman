@@ -24,6 +24,7 @@
                 html5lib
               ]
             ))
+            rename
           ];
         };
         packages = {
