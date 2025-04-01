@@ -26,6 +26,9 @@
             ))
           ];
         };
+        packages = {
+          default = pkgs.callPackage (import ./.) { };
+        };
       }
     );
 }
