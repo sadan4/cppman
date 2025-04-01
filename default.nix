@@ -20,6 +20,6 @@ stdenv.mkDerivation (finalAttrs: {
     # Lib keywords
     rename -l 's/C\+\+ keyword: (\w+)\.(.*?)$/cpp_kw_$1.$2/' $out/share/man/man3/*
     # headers
-    renqme -l 's/(?:Standard|Experimental) library header (<\w+>)\.(.*?)$/$1.$2/' $out/share/man/man3/*
+    rename -l 's/(?:Standard|Experimental) library header (<\w+>)\.(.*?)$/$1.$2/' $out/share/man/man3/*
   '';
 })
