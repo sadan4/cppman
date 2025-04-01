@@ -20,7 +20,7 @@ stdenv.mkDerivation (finalAttrs: {
     rename 's/C\+\+ keyword: (\w+)\.(.*?)$/cpp_kw_$1.$2/' $out/share/man/man3/*
     # headers
     rename 's/(?:Standard|Experimental) library header (<\w+>)\.(.*?)$/$1.$2/' $out/share/man/man3/*
-    # unordered_map and map template types
-    rename 's/(std::(?:unordered_)?map)<.*?>(.*)/$1$2/' $out/share/man/man3/*
+    # remove templates
+    rename 's/(std::(?:(?:unordered_)?(?:multi)?(?:map|set)|vector|list|unique_lock|unique_ptr|shared_ptr|shared_lock))<.*?>(.*)/$1$2/' $out/share/man/man3/*
   '';
 })
