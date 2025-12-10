@@ -22,6 +22,8 @@
               pythonPackages: with pythonPackages; [
                 beautifulsoup4
                 html5lib
+                docutils
+                pygments
               ]
             ))
             rename
