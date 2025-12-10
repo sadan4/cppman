@@ -19,8 +19,9 @@
           packages = with pkgs; [
             groff
             (python3.withPackages (
-              pythonPackages: with pythonPackages; [
+              ps: with ps; [
                 beautifulsoup4
+                lxml
                 html5lib
                 docutils
                 pygments
