@@ -347,6 +347,9 @@ in
 				rm "${p}/std::move (algorithm).3.gz"
 				rename 's/(std::(?:swap|move)) \(utility\)(.3.gz)/$1$2/' ${p}*
 				rename 's/(std::swap)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
+                # std::to_string
+                rename 's/(?<=std::to_string) \(string_basic_string\)(?=\.3\.gz)//' ${p}*
+                rename 's/(?<=std::to_string) \([a-z]+?_(basic_string)\)(?=\.3\.gz)/<std::$1>/' ${p}*
 
 				# std::isspace(std::locale) std::toupper(std::locale) etc...
 				rename 's/(std::[^<>:()]+)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
