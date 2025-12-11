@@ -310,45 +310,45 @@ in
 			];
 			src = ./cache/cppreference.com;
 			installPhase = ''
-				runHook preInstall
+                runHook preInstall
 
-				mkdir -p $out/bin
-				mkdir -p $out/share/man/man3
+                mkdir -p $out/bin
+                mkdir -p $out/share/man/man3
 
-				cp ./* $out/share/man/man3
-				# Lib keywords
-				rename 's/C\+\+ keyword: (\w+)\.(.*?)$/cpp_kw_$1.$2/' ${p}*
-				# headers
-				rename 's/(?:Standard|Experimental) library header (<\w+>)\.(.*?)$/$1.$2/' ${p}*
-				# TODO: rename deduction guides to not have spaces
-				# headers with a version eg <unordered_map><NBSP>(C++11)
-				# TODO: handle headers with more than one version eg: <codecvt><NBSP>(C++11)(deprecated in C++17)
-				# for some ungodly reason, they have NBSP's (probably a remanant from the scrape)
-				rename 's/(?:Standard|Experimental) library header (<\w+>)${s}*?\(C\+\+(\d{2})\)\.(.*?)$/$1(c++$2).$3/' ${p}*
-				# TODO: some member pairs (eg: begin, cbegin) are written like this `std::foo<T>::begin(), std::foo<T>::cbegin()`
-				# separate them into separate files
-				# remove templates
-				rename 's/(std::(?:experimental::)?(?:pmr::)?(?:${types}))<[^<]*?>(.*)/$1$2/' ${p}*
-				            # second pass for range iterator types
-				            rename 's/(std::ranges::[a-z_]+?_view::(?:iterator|sentinel))<Const>(.*)/$1$2/' ${p}*
-				# std::vector<bool> has separate docs and is a special case
-				rename 's/(std::vector)<(?!bool)[^<]*?>(.*)/$1$2/' ${p}*
-				# we still want to remove the Allocator template arg tho
-				rename 's/(std::vector<bool),Allocator(>.*)/$1$2/' ${p}*
-				            # owner_less<void> specialization
-				            rename 's/(std::owner_less) \(owner_less.html\)(.3.gz)/$1$2/' ${p}*
-				            rename 's/(std::owner_less) \(owner_less_void.html\)(.3.gz)/$1<void>$2/' ${p}*
-				            # atomic specialization
-				rename 's/(std::atomic)<T>(.*)/$1$2/' ${p}*
-				            # ctype specialization
-				rename 's/(std::ctype)<CharT>(.*)/$1$2/' ${p}*
-				            # swap and move were moved to <utility>
-				            rm "${p}/std::swap (algorithm).3.gz"
-				            rm "${p}/std::move (algorithm).3.gz"
-				            rename 's/(std::(?:swap|move)) \(utility\)(.3.gz)/$1$2/' ${p}*
-				            rename 's/(std::swap)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
+                cp ./* $out/share/man/man3
+                # Lib keywords
+                rename 's/C\+\+ keyword: (\w+)\.(.*?)$/cpp_kw_$1.$2/' ${p}*
+                # headers
+                rename 's/(?:Standard|Experimental) library header (<\w+>)\.(.*?)$/$1.$2/' ${p}*
+                # TODO: rename deduction guides to not have spaces
+                # headers with a version eg <unordered_map><NBSP>(C++11)
+                # TODO: handle headers with more than one version eg: <codecvt><NBSP>(C++11)(deprecated in C++17)
+                # for some ungodly reason, they have NBSP's (probably a remanant from the scrape)
+                rename 's/(?:Standard|Experimental) library header (<\w+>)${s}*?\(C\+\+(\d{2})\)\.(.*?)$/$1(c++$2).$3/' ${p}*
+                # TODO: some member pairs (eg: begin, cbegin) are written like this `std::foo<T>::begin(), std::foo<T>::cbegin()`
+                # separate them into separate files
+                # remove templates
+                rename 's/(std::(?:experimental::)?(?:pmr::)?(?:${types}))<[^<]*?>(.*)/$1$2/' ${p}*
+				# second pass for range iterator types
+				rename 's/(std::ranges::[a-z_]+?_view::(?:iterator|sentinel))<Const>(.*)/$1$2/' ${p}*
+                # std::vector<bool> has separate docs and is a special case
+                rename 's/(std::vector)<(?!bool)[^<]*?>(.*)/$1$2/' ${p}*
+                # we still want to remove the Allocator template arg tho
+                rename 's/(std::vector<bool),Allocator(>.*)/$1$2/' ${p}*
+				# owner_less<void> specialization
+				rename 's/(std::owner_less) \(owner_less.html\)(.3.gz)/$1$2/' ${p}*
+				rename 's/(std::owner_less) \(owner_less_void.html\)(.3.gz)/$1<void>$2/' ${p}*
+				# atomic specialization
+                rename 's/(std::atomic)<T>(.*)/$1$2/' ${p}*
+				# ctype specialization
+                rename 's/(std::ctype)<CharT>(.*)/$1$2/' ${p}*
+				# swap and move were moved to <utility>
+				rm "${p}/std::swap (algorithm).3.gz"
+				rm "${p}/std::move (algorithm).3.gz"
+				rename 's/(std::(?:swap|move)) \(utility\)(.3.gz)/$1$2/' ${p}*
+				rename 's/(std::swap)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
 
-				            # std::isspace(std::locale) std::toupper(std::locale) etc...
-				            rename 's/(std::[^<>:()]+)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
+				# std::isspace(std::locale) std::toupper(std::locale) etc...
+				rename 's/(std::[^<>:()]+)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
 			'';
 		})
