@@ -349,7 +349,7 @@ in
 				rename 's/(std::swap)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
                 # std::to_string
                 rename 's/(?<=std::to_string) \(string_basic_string\)(?=\.3\.gz)//' ${p}*
-                rename 's/(?<=std::to_string) \([a-z]+?_(basic_string)\)(?=\.3\.gz)/<std::$1>/' ${p}*
+                rename 's/(?<=std::to_string) \([a-z]+?_([a-z_]+?)\)(?=\.3\.gz)/<std::$1>/' ${p}*
 
 				# std::isspace(std::locale) std::toupper(std::locale) etc...
 				rename 's/(std::[^<>:()]+)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
