@@ -353,5 +353,9 @@ in
 
 				# std::isspace(std::locale) std::toupper(std::locale) etc...
 				rename 's/(std::[^<>:()]+)\((std::.*?)\)(.3.gz)/$1<$2>$3/' ${p}*
+                # std::hash<Key>
+                rename 's/(std::hash)<Key>(.*)/$1$2/' ${p}*
+                # some of the std::hash funcs have a space after them, idk why
+                rename 's/(?<=std::hash) //' ${p}*
 			'';
 		})
